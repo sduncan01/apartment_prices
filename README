@@ -26,6 +26,6 @@ Customizations Jan. 2025:
  - let query_padmapper.py pull curl command from an example that currently works, saved in a file
  - only go 30 layers deep in AreaTooLarge
  - modify buckets in draw_heatmap.py to account for less expensive areas
- - add runCities.sh to run query and draw heatmap for specified list of cities
+ - add runCities.sh to run query, draw heatmap, and combine it with downloaded image (using ImageMagick 6.x) for specified list of cities
  - include downloaded and generated images (final results moved to /maps) in repository
  
