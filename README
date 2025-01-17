@@ -16,3 +16,16 @@ test that everything's working before you wait a long time for 1000x1000 or some
 Example output: http://www.jefftk.com/apartment_prices/
 
 Released under the GPL by Jeff Kaufman (2011-2013)
+
+OpenStreetMap data licensed under the Open Database License - see https://www.openstreetmap.org/copyright
+
+Customizations Jan. 2025: 
+ - add 'city' parameter to run query_padmapper.py and draw_heatmap.py for a specified city
+ - manually download OpenStreetMap static images to /maps (using Share menu with custom area selection)
+ - hard-code static image dimensions and boundaries for cities in query_padmapper.py and draw_heatmap.py
+ - let query_padmapper.py pull curl command from an example that currently works, saved in a file
+ - only go 30 layers deep in AreaTooLarge
+ - modify buckets in draw_heatmap.py to account for less expensive areas
+ - add runCities.sh to run query and draw heatmap for specified list of cities
+ - include downloaded and generated images (final results moved to /maps) in repository
+ 

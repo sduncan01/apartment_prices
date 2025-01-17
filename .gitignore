@@ -1,0 +1,11 @@
+apts-data-original/
+bos_old/
+testLoop.sh
+testScript.sh
+maps2/
+testSh/
+# ignore maps duplicated in /maps
+*/*Map.png
+*/*Out.png
+!maps/*Out.png
+

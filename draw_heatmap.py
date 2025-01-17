@@ -9,8 +9,9 @@ from query_padmapper import MAX_LAT, MAX_LON, MIN_LAT, MIN_LON
 
 # change these to change how detailed the generated image is
 # (1000x1000 is good, but very slow)
-MAX_X=1000
-MAX_Y=1000
+# these will be changed on a per-city basis - see below
+MAX_X=50
+MAX_Y=50
 
 DRAW_DOTS=True
 
@@ -383,11 +384,11 @@ buckets = [
     2600,
     2400,
     2200,
-    2100,
     2000,
-    1900,
     1800,
-    1700]
+    1600,
+    1400,
+    1200]
 
 colors = []
 n_colors = len(buckets) + 1
@@ -437,7 +438,161 @@ def gaussian(prices, lat, lon, ignore=None):
     return num/dnm
 
 
-def start(fname):
+def start(fname, city):
+
+    global MAX_X
+    global MAX_Y
+    
+    xValues = {"test" : 254,
+               "bos" : 1165,
+               "den" : 1286,
+               "sfo" : 1249,
+               "chi" : 1079,
+               "wma" : 826,
+               "nyc" : 1014,
+               "dc" : 980,
+               # "phi" : 973,
+               "sea" : 1171,
+               "nm1" : 790,
+               "nm2" : 1051,
+               "vt1" : 1066,
+               "vt2" : 797,
+               "stl" : 1220,
+               "sd" : 984,
+               "por" : 1198,
+               "pme" : 1047,
+               "pit" : 746,
+               "slo" : 830,
+               "phi2" : 763,
+    }
+    MAX_X = xValues[city]
+    
+    yValues = {"test" : 259,
+               "bos" : 1076,
+               "den" : 1090,
+               "sfo" : 1061,
+               "chi" : 1063,
+               "wma" : 920,
+               "nyc" : 1081,
+               "dc" : 1045,
+               # "phi" : 833,
+               "sea" : 1058,
+               "nm1" : 771,
+               "nm2" : 898,
+               "vt1" : 919,
+               "vt2" : 776,
+               "stl" : 1062,
+               "sd" : 925,
+               "por" : 1024,
+               "pme" : 892,
+               "pit" : 704,
+               "slo" : 957,
+               "phi2" : 690,
+    }
+    MAX_Y = yValues[city]
+    
+    # copied from query_padmapper.py - surely there's a better way to do this
+    global MIN_LAT # south
+    global MAX_LAT # north
+    global MIN_LON # west
+    global MAX_LON # east
+      
+    minLatValues = {"test" : 42.2979,
+                    "bos" : 42.23543,
+                    "den" : 39.66207,
+                    "sfo" : 37.6492,
+                    "chi" : 41.7794,
+                    "wma" : 42.2475,
+                    "nyc" : 40.5656,
+                    "dc" : 38.7882,
+                    # "phi" : 39.8759,
+                    "sea" : 47.5229,
+                    "nm1" : 35.5771,
+                    "nm2" : 35.0223,
+                    "vt1" : 44.3942,
+                    "vt2" : 43.5934,
+                    "stl" : 38.5623,
+                    "sd" : 32.6262,
+                    "por" : 45.4207,
+                    "pme" : 43.5765,
+                    "pit" : 40.3673,
+                    "slo" : 35.0945,
+                    "phi2" : 39.8812,
+    }
+    MIN_LAT = minLatValues[city]
+     
+    maxLatValues = {"test" : 42.3943,
+                    "bos" : 42.43925,
+                    "den" : 39.8864,
+                    "sfo" : 37.8804,
+                    "chi" : 41.9841,
+                    "wma" : 42.4210,
+                    "nyc" : 40.7833,
+                    "dc" : 39.0094,
+                    # "phi" : 40.0467,
+                    "sea" : 47.6898,
+                    "nm1" : 35.7553,
+                    "nm2" : 35.2298,
+                    "vt1" : 44.5588,
+                    "vt2" : 43.7343,
+                    "stl" : 38.7885,
+                    "sd" : 32.8529,
+                    "por" : 45.5969,
+                    "pme" : 43.7392,
+                    "pit" : 40.5084,
+                    "slo" : 35.3178,
+                    "phi2" : 40.0225,
+    }
+    MAX_LAT = maxLatValues[city]
+    
+    minLonValues = {"test" : -71.1667,
+                    "bos" : -71.28736,
+                    "den" : -105.1604,
+                    "sfo" : -122.5240,
+                    "chi" : -87.8467,
+                    "wma" : -72.7072,
+                    "nyc" : -74.0540,
+                    "dc" : -77.1656,
+                    # "phi" : -75.2955,
+                    "sea" : -122.4402,
+                    "nm1" : -106.0751,
+                    "nm2" : -106.7627, 
+                    "vt1" : -73.2884, 
+                    "vt2" : -72.3941, 
+                    "stl" : -90.4758,
+                    "sd" : -117.2918, 
+                    "por" : -122.8340,
+                    "pme" : -70.4653,
+                    "pit" : -80.0467,
+                    "slo" : -120.7171,   
+                    "phi2" : -75.2642,        
+    }
+    MIN_LON = minLonValues[city]
+      
+    maxLonValues = {"test" : -71.0376,
+                    "bos" : -70.98803,
+                    "den" : -104.81627,
+                    "sfo" : -122.1786,
+                    "chi" : -87.5662,
+                    "wma" : -72.4768,
+                    "nyc" : -73.7862,
+                    "dc" : -76.9005,
+                    # "phi" : -75.0370,
+                    "sea" : -122.1649,
+                    "nm1" : -105.8505,
+                    "nm2" : -106.4623,
+                    "vt1" : -73.0230,
+                    "vt2" : -72.1929,
+                    "stl" : -90.1439,
+                    "sd" : -117.0030,
+                    "por" : -122.5405,
+                    "pme" : -70.2013,
+                    "pit" : -79.8490,
+                    "slo" : -120.4795,
+                    "phi2" : -75.0617,
+    }
+    MAX_LON = maxLonValues[city]
+
     print("loading data...")
     priced_points, slope, y_intercept = load_prices([fname])
 
@@ -503,8 +658,9 @@ def start(fname):
           "adjustments": adjustments}))
 
 if __name__ == "__main__":
-    if len(sys.argv) != 2:
-        print("usage: python draw_heatmap.py apts.txt")
+    if len(sys.argv) != 3:
+        print("usage: python draw_heatmap.py apts.txt city")
     else:
         fname = sys.argv[1]
-        start(fname)
+        city = sys.argv[2]
+        start(fname, city)
