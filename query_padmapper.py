@@ -9,7 +9,7 @@ import shlex
 import time
 
 # usage:
-# python3 query_padmapper.py test/dl1.txt test/proc1.txt bos
+# python3 query_padmapper.py test/dl1.txt test/proc1.txt test
 
 # default
 MIN_LAT = 42.2 
